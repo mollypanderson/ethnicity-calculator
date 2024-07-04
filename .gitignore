@@ -1,0 +1,14 @@
+build
+!**/dev-bundle/webapp/VAADIN/build
+.idea
+.gradle
+
+# The following files are generated/updated by vaadin-gradle-plugin
+node_modules/
+webpack.generated.js
+target
+out
+pnpmfile.js
+.npmrc
+frontend/generated
+.idea/
