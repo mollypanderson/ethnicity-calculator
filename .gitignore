@@ -12,3 +12,4 @@ pnpmfile.js
 .npmrc
 frontend/generated
 .idea/
+.DS_Store
