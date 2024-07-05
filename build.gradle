@@ -2,55 +2,46 @@ buildscript {
     repositories {
         mavenCentral()
         maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { setUrl("https://repo.spring.io/milestone") }
+      //  maven { url "https://plugins.gradle.org/m2/" }
     }
 }
 
 plugins {
-    id 'war'
-    id 'org.gretty' version '4.1.1'
+    id 'org.springframework.boot' version '3.1.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
     id 'com.vaadin'
-   // id 'org.akhikhl.gretty'
-  //  id 'com.google.cloud.tools.appengine'
 }
-
-war {
-    enabled = true
-}
-
-defaultTasks("build")
 
 repositories {
     mavenCentral()
     maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven { setUrl("https://repo.spring.io/milestone") }
+    maven { setUrl("https://maven.vaadin.com/vaadin-addons") }
+  //  maven { url "https://plugins.gradle.org/m2/" }
 }
 
-//gretty {
-//    contextPath = "/"
-//    servletContainer = 'jetty11'
-//}
-
-// The following pnpmEnable = false is not needed as npm is used by default,
-// this is just an example of how to configure the Gradle Vaadin Plugin:
-// for more configuraion options please see: https://vaadin.com/docs/latest/guide/start/gradle/#all-options
-vaadin {
-    pnpmEnable = false
-    productionMode = true
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 dependencies {
-    implementation enforcedPlatform("com.vaadin:vaadin-bom:$vaadinVersion")
+    implementation('com.vaadin:vaadin-spring-boot-starter')
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Vaadin
-    implementation("com.vaadin:vaadin-core")
+  //  implementation("com.vaadin:vaadin-core")
 
     // logging
     // currently we are logging through the SLF4J API to SLF4J-Simple. See src/main/resources/simplelogger.properties file for the logger configuration
-    implementation "org.slf4j:slf4j-simple:2.0.7"
+    //implementation "org.slf4j:slf4j-simple:2.0.7"
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    implementation 'commons-io:commons-io:2.16.1'
+   // implementation 'commons-io:commons-io:2.16.1'
 
     implementation 'org.gedcomx:gedcomx-model:3.20.0'
 
@@ -58,18 +49,24 @@ dependencies {
     implementation 'org.gedcomx:gedcom5-conversion:1.13.0'
 
     // https://mvnrepository.com/artifact/com.google.cloud.tools/appengine-maven-plugin
-    implementation 'com.google.cloud.tools:appengine-gradle-plugin:2.5.0'
-    implementation 'org.akhikhl.gretty:gretty:+'
+   // implementation 'com.google.cloud.tools:appengine-gradle-plugin:2.5.0'
+   // implementation 'org.akhikhl.gretty:gretty:+'
+
+    // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-runner
+  //  implementation 'org.eclipse.jetty:jetty-runner:11.0.22'
 
 }
 
-//gretty {
-//    servletContainer = 'jetty9'  // What App Engine Flexible uses
-//}
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:$vaadinVersion"
+    }
+}
 
-//appengine {
-//    deploy {   // deploy configuration
-//        stopPreviousVersion = true  // default - stop the current version
-//        promote = true              // default - & make this the current version
-//    }
+//bootJar {
+//    enabled = false
+//}
+//
+//jar {
+//    enabled = true
 //}

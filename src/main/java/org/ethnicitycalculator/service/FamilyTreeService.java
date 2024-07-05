@@ -1,7 +1,6 @@
 package org.ethnicitycalculator.service;
 
 import org.ethnicitycalculator.model.FamilyMember;
-import org.ethnicitycalculator.util.AmericanBirthplaces;
 import org.gedcomx.Gedcomx;
 import org.gedcomx.common.URI;
 import org.gedcomx.conclusion.Relationship;
@@ -15,9 +14,11 @@ public class FamilyTreeService {
     List<Relationship> parentChildRelationships = new ArrayList<>();
     List<String> results = new ArrayList<>();
     Map<String, Double> mathResults = new HashMap<>();
+    List<String> ignoredBirthplaces;
 
-    public FamilyTreeService(Gedcomx familyTree) {
+    public FamilyTreeService(Gedcomx familyTree, List<String> ignoredBirthplaces) {
         this.familyTree = familyTree;
+        this.ignoredBirthplaces = ignoredBirthplaces;
     }
 
     public List<Relationship> getRootPersonParents() {
@@ -67,7 +68,7 @@ public class FamilyTreeService {
                     .toList());
 
             if (birthplace != null) {
-                String americanBirthplace = AmericanBirthplaces.getAll().stream().filter(birthplace::contains)
+                String americanBirthplace = ignoredBirthplaces.stream().filter(birthplace::contains)
                         .findAny()
                         .orElse(null);
 

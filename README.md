@@ -60,13 +60,13 @@ Simply run the following command in this repo:
 ```
 
 That will build this app in production mode as a WAR archive; please find the
-WAR file in `build/libs/base-starter-gradle.war`. You can run the WAR file
+WAR file in `build/libs/ethnicity-calculator.war`. You can run the WAR file
 by using [Jetty Runner](https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-runner):
 
 ```bash
 cd build/libs/
 wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/11.0.15/jetty-runner-11.0.15.jar
-java -jar jetty-runner-11.0.15.jar base-starter-gradle.war
+java -jar jetty-runner-11.0.15.jar ethnicity-calculator.war
 ```
 
 Now you can open the [http://localhost:8080](http://localhost:8080) with your browser.

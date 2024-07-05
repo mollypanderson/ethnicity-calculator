@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class EthnicityCalculator {
 
-    public static String getEthnicityResults(InputStream fileInputStream, String filename) throws IOException, SAXParseException {
+    public static String getEthnicityResults(InputStream fileInputStream, String filename, List<String> ignoredBirthplaces) throws IOException, SAXParseException {
         PrintStream fileStream = new PrintStream("src/main/resources/logs.txt");
         System.setOut(fileStream);
 
@@ -43,7 +43,7 @@ public class EthnicityCalculator {
         File file = new File("src/main/resources/mygedx.gedx");
 
         Gedcomx familyTree = GedcomFileProcessor.getGedcomTree(file);
-        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree);
+        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree, ignoredBirthplaces);
 
         List<Relationship> parents = familyTreeService.getRootPersonParents();
         if (parents.size() > 2) {
@@ -73,7 +73,7 @@ public class EthnicityCalculator {
         for(Map.Entry<String, Double> entry : mathResults.entrySet()){
             sum = sum + entry.getValue();
         }
-        String total = "\n\ntotal: " + String.format("%,.2f", sum) + "%";
+        String total = "\ntotal: " + String.format("%,.2f", sum) + "%";
         sb.append(total);
 
         return sb.toString();

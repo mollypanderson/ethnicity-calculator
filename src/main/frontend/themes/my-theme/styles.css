@@ -4,10 +4,29 @@
    Visit https://vaadin.com/docs/styling/application-theme/ for more information.
 */
 
-/* Example: CSS class name to center align the content . */
-.centered-content {
-  margin: 0 auto;
+upload-box {
+}
+
+vaadin-button.calculate {
+    margin: 0 auto;
+}
+
+vaadin-button.edit {
+    color: green;
+    margin-left: auto;
+    margin-right: 0;
+    max-width: 900px;
+}
+
+vaadin-list-box {
+  margin: 0;
   max-width: 900px;
+}
+
+vaadin-details {
+  max-width: 900px;
+  margin-left: 0;
+  margin-right: auto;
 }
 
 /* Example: the style is applied only to the textfields which have the `bordered` class name. */
