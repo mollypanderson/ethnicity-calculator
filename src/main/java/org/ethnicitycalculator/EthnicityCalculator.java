@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class EthnicityCalculator {
         }
 
         Map<String, Double> results = familyTreeService.findImmigrantAncestors(parents);
+        ArrayList<String> endOfLineItems = familyTreeService.getEndOfLineResults();
 
         Map<String, Double> sortedResults = results.entrySet().stream()
                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
@@ -60,14 +62,17 @@ public class EthnicityCalculator {
 
         System.out.println(targetFile.getAbsolutePath());
         Files.deleteIfExists(Path.of(filepath));
-        return prettyPrintResults(sortedResults);
+        return prettyPrintResults(sortedResults, endOfLineItems);
     }
 
-    public static String prettyPrintResults(Map<String, Double> mathResults) {
+    public static String prettyPrintResults(Map<String, Double> mathResults, ArrayList<String> endOfLineItems) {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, Double> entry : mathResults.entrySet()){
             sb.append("\n");
             sb.append(String.format("%,.2f", entry.getValue())).append("% ").append(entry.getKey());
+            if (endOfLineItems.contains(entry.getKey())) {
+                sb.append(" (End of line)");
+            }
         }
         double sum = 0;
         for(Map.Entry<String, Double> entry : mathResults.entrySet()){

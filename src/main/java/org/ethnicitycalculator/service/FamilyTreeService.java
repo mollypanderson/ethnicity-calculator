@@ -15,6 +15,7 @@ public class FamilyTreeService {
     List<String> results = new ArrayList<>();
     Map<String, Double> mathResults = new HashMap<>();
     List<String> ignoredBirthplaces;
+    ArrayList<String> endOfLineResults = new ArrayList<>();
 
     public FamilyTreeService(Gedcomx familyTree, List<String> ignoredBirthplaces) {
         this.familyTree = familyTree;
@@ -68,16 +69,19 @@ public class FamilyTreeService {
                     .toList());
 
             if (birthplace != null) {
-                String americanBirthplace = ignoredBirthplaces.stream().filter(birthplace::contains)
+                String americanBirthplace = ignoredBirthplaces.stream().filter(birthplace.toLowerCase()::contains)
                         .findAny()
                         .orElse(null);
 
-                if (americanBirthplace == null || birthplace.equals("Unknown") || generation > 9 || parents.isEmpty()) {
+                if (americanBirthplace == null || birthplace.equals("Unknown") || parents.isEmpty()) {
                     // we found one
                     String[] txt = birthplace.split(",");
                     String country = txt[txt.length - 1].trim();
                     generateSingleResult(pctDna, country, ancestor.getFullName());
-
+                    //&& americanBirthplace != null
+                    if (parents.isEmpty()) {
+                        endOfLineResults.add(country);
+                    }
                     return;
                 }
             }
@@ -134,5 +138,9 @@ public class FamilyTreeService {
         } else {
             mathResults.put(country, pctDna);
         }
+    }
+
+    public ArrayList<String> getEndOfLineResults() {
+        return endOfLineResults;
     }
 }

@@ -11,7 +11,7 @@ vaadin-button.calculate {
     margin: 0 auto;
 }
 
-vaadin-button.edit {
+vaadin-button.editCancelSave {
     color: green;
     margin-left: auto;
     margin-right: 0;

@@ -28,23 +28,11 @@ public class DefaultIgnoredBirthplaces {
             "Kentucky",
             "NJ",
             "NH",
-            "VA"
-    );
-
-    private List<String> colonialLocales = Arrays.asList(
-            "North Carolina",
-            "United States",
-            "New York",
-            "Quebec",
-            "Canada",
-            "Atlantic ocean (en route to America)",
-            "New Jersey",
-            "Pennsylvania",
+            "VA",
             "British Colonial America",
-            "Connecticut",
-            "Qbc.",
-            "NH",
-            "Virginia"
+            "BRITISH COLONIAL AMERICA (William Stephen Woodrum I)",
+            "BRITISH COLONIAL AMERICA (Martha Patsy  Moore)"
+            //  "Qbc."
     );
 
     public List<String> getAll() {
@@ -57,9 +45,5 @@ public class DefaultIgnoredBirthplaces {
 
     public void removeItem(String birthplace) {
         americanLocales.remove(birthplace);
-    }
-
-    public List<String> getColonialLocales() {
-        return colonialLocales;
     }
 }
