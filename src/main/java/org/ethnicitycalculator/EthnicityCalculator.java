@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class EthnicityCalculator {
 
-    public static String getEthnicityResults(InputStream fileInputStream, String filename) throws IOException, SAXParseException {
+    public static String getEthnicityResults(InputStream fileInputStream, String filename, List<String> ignoredBirthplaces) throws IOException, SAXParseException {
         PrintStream fileStream = new PrintStream("src/main/resources/logs.txt");
         System.setOut(fileStream);
 
@@ -43,7 +44,7 @@ public class EthnicityCalculator {
         File file = new File("src/main/resources/mygedx.gedx");
 
         Gedcomx familyTree = GedcomFileProcessor.getGedcomTree(file);
-        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree);
+        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree, ignoredBirthplaces);
 
         List<Relationship> parents = familyTreeService.getRootPersonParents();
         if (parents.size() > 2) {
@@ -53,6 +54,7 @@ public class EthnicityCalculator {
         }
 
         Map<String, Double> results = familyTreeService.findImmigrantAncestors(parents);
+        ArrayList<String> endOfLineItems = familyTreeService.getEndOfLineResults();
 
         Map<String, Double> sortedResults = results.entrySet().stream()
                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
@@ -60,20 +62,23 @@ public class EthnicityCalculator {
 
         System.out.println(targetFile.getAbsolutePath());
         Files.deleteIfExists(Path.of(filepath));
-        return prettyPrintResults(sortedResults);
+        return prettyPrintResults(sortedResults, endOfLineItems);
     }
 
-    public static String prettyPrintResults(Map<String, Double> mathResults) {
+    public static String prettyPrintResults(Map<String, Double> mathResults, ArrayList<String> endOfLineItems) {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, Double> entry : mathResults.entrySet()){
             sb.append("\n");
             sb.append(String.format("%,.2f", entry.getValue())).append("% ").append(entry.getKey());
+            if (endOfLineItems.contains(entry.getKey())) {
+                sb.append(" (End of line)");
+            }
         }
         double sum = 0;
         for(Map.Entry<String, Double> entry : mathResults.entrySet()){
             sum = sum + entry.getValue();
         }
-        String total = "\n\ntotal: " + String.format("%,.2f", sum) + "%";
+        String total = "\ntotal: " + String.format("%,.2f", sum) + "%";
         sb.append(total);
 
         return sb.toString();

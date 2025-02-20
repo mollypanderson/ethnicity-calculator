@@ -3,9 +3,9 @@ package org.ethnicitycalculator.util;
 import java.util.Arrays;
 import java.util.List;
 
-public class AmericanBirthplaces {
+public class DefaultIgnoredBirthplaces {
 
-    private static final List<String> americanLocales = Arrays.asList(
+    public List<String> americanLocales = Arrays.asList(
             "United States",
             "USA",
             "U.S.A",
@@ -28,30 +28,22 @@ public class AmericanBirthplaces {
             "Kentucky",
             "NJ",
             "NH",
-            "VA"
-    );
-
-    private static final List<String> colonialLocales = Arrays.asList(
-            "North Carolina",
-            "United States",
-            "New York",
-            "Quebec",
-            "Canada",
-            "Atlantic ocean (en route to America)",
-            "New Jersey",
-            "Pennsylvania",
+            "VA",
             "British Colonial America",
-            "Connecticut",
-            "Qbc.",
-            "NH",
-            "Virginia"
+            "BRITISH COLONIAL AMERICA (William Stephen Woodrum I)",
+            "BRITISH COLONIAL AMERICA (Martha Patsy  Moore)"
+            //  "Qbc."
     );
 
-    public static List<String> getAll() {
+    public List<String> getAll() {
         return americanLocales;
     }
 
-    public static List<String> getColonialLocales() {
-        return colonialLocales;
+    public void addItem(String birthplace) {
+        americanLocales.add(birthplace);
+    }
+
+    public void removeItem(String birthplace) {
+        americanLocales.remove(birthplace);
     }
 }
