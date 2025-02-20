@@ -1,5 +1,8 @@
 # Ethnicity Calculator
 
+<img width="1414" alt="Screenshot 2025-02-20 at 1 46 46 PM" src="https://github.com/user-attachments/assets/357da5e0-0f14-4523-83d9-455ae7e62856" />
+<br />
+
 ### Getting Started
 ```
 git clone git@github.com:mollypanderson/ethnicity-calculator.git
