@@ -1,5 +1,11 @@
 # Ethnicity Calculator
 
+This is a simple tool that takes in a GEDCOM file (the standard file format for exchanging genealogical data) and traverses each line of your family tree until it finds an ancestor who was born somewhere other than the US/Canada. It compiles that data from each line and prints out a summary with each country found + percent of your ancestry associated with that country. Useful for people like me that have family trees so large that it would be extremely cumbersome to do this math by hand. 
+
+I've tested it with a downloaded GEDCOM file from both MyHeritage and Ancestry. Those sites both export GEDCOM 5.5.5 files. It should work with the newer GEDCOMX format as well. 
+
+<br />
+
 <img width="1414" alt="Screenshot 2025-02-20 at 1 46 46 PM" src="https://github.com/user-attachments/assets/357da5e0-0f14-4523-83d9-455ae7e62856" />
 <br />
 
